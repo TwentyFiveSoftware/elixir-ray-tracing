@@ -1,7 +1,7 @@
 require Math
 
 defmodule Vector3 do
-  defstruct x: 0, y: 0, z: 0
+  defstruct x: 0.0, y: 0.0, z: 0.0
 
   @spec vector_add(Vector3, Vector3) :: Vector3
   def vector_add(a, b) do
