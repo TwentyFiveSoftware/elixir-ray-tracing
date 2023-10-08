@@ -38,6 +38,7 @@ defmodule Vector3 do
     v_length = vector_length(v)
 
     if v_length == 0 do
+      IO.write("yes")
       v
     else
       %Vector3{x: v.x / v_length, y: v.y / v_length, z: v.z / v_length}

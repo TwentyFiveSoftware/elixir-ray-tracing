@@ -10,12 +10,13 @@ defmodule ElixirRayTracing do
   @spheres [%Sphere{center: %Vector3{z: 1}, radius: 0.5}]
 
   def main do
-    ray_trace()
+    pixels = ray_trace()
+    Image.save_as_png("./render.png", @width, @height, pixels)
   end
 
   @spec ray_trace() :: [Vector3]
   def ray_trace() do
-    for y <- 1..@height, x <- 1..@width, do: calculate_pixel_color(x, y)
+    for y <- 0..(@height - 1), x <- 0..(@width - 1), do: calculate_pixel_color(x, y)
   end
 
   @spec calculate_pixel_color(integer, integer) :: Vector3
@@ -29,6 +30,7 @@ defmodule ElixirRayTracing do
 
   @spec ray_color(Ray) :: Vector3
   def ray_color(ray) do
-    (Vector3.vector_normalize(ray.direction).y + 1.0) * 0.5
+    t = (Vector3.vector_normalize(ray.direction).y + 1.0) * 0.5
+    %Vector3{x: t, y: t, z: t}
   end
 end

@@ -21,5 +21,7 @@
     <orderEntry type="library" name="credo" level="project" />
     <orderEntry type="library" name="ex_doc" level="project" />
     <orderEntry type="library" name="inch_ex" level="project" />
+    <orderEntry type="library" name="pngex" level="project" />
+    <orderEntry type="library" name="dialyxir" level="project" />
   </component>
 </module>

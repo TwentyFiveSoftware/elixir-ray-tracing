@@ -1,3 +1,4 @@
 %{
   "math": {:hex, :math, "0.6.0", "69325af99e600123f6d994833502f6d063a2fa8f2786a3c0461fe6c6123a5166", [:mix], [], "hexpm", "2c73a64d64f719ee1f2821d382f3ed63e8e9564e5176d1c8aa777aac49b41bf7"},
+  "pngex": {:hex, :pngex, "0.1.2", "824c2da291fda236397729f236b29f87b98a434d58124ea9f7fa03d3b3cf8587", [:mix], [], "hexpm", "9f9f2d9aa286d03f6c317017a09e1b548fa0aa6b901291e24dbf65d8212b22b0"},
 }

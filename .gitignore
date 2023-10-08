@@ -26,3 +26,4 @@ elixir_ray_tracing-*.tar
 /tmp/
 
 .idea
+render.png
