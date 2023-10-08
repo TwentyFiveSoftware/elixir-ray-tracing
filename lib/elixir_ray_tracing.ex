@@ -30,7 +30,13 @@ defmodule ElixirRayTracing do
 
   @spec ray_color(Ray) :: Vector3
   def ray_color(ray) do
-    t = (Vector3.vector_normalize(ray.direction).y + 1.0) * 0.5
-    %Vector3{x: t, y: t, z: t}
+    hit_record = Ray.calculate_ray_collision(ray, @spheres)
+
+    if hit_record.hit do
+      hit_record.normal
+    else
+      t = (Vector3.vector_normalize(ray.direction).y + 1.0) * 0.5
+      Vector3.lerp(%Vector3{x: 1.0, y: 1.0, z: 1.0}, %Vector3{x: 0.3, y: 0.5, z: 0.8}, t)
+    end
   end
 end

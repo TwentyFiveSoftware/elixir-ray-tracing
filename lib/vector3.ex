@@ -44,4 +44,13 @@ defmodule Vector3 do
       %Vector3{x: v.x / v_length, y: v.y / v_length, z: v.z / v_length}
     end
   end
+
+  @spec lerp(Vector3, Vector3, float) :: Vector3
+  def lerp(a, b, t) do
+    %Vector3{
+      x: a.x * (1.0 - t) + b.x * t,
+      y: a.y * (1.0 - t) + b.y * t,
+      z: a.z * (1.0 - t) + b.z * t
+    }
+  end
 end
