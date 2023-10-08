@@ -17,5 +17,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Elixir at /usr/lib/elixir" jdkType="Elixir SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="math" level="project" />
+    <orderEntry type="library" name="credo" level="project" />
+    <orderEntry type="library" name="ex_doc" level="project" />
+    <orderEntry type="library" name="inch_ex" level="project" />
   </component>
 </module>
