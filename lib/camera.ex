@@ -4,7 +4,7 @@ defmodule Camera do
             viewport_width: 1,
             viewport_height: 1
 
-  @spec new_camera(Vector3, float, float, float) :: Camera
+  @spec new_camera(%Vector3{}, float(), float(), float()) :: %Camera{}
   def new_camera(origin, viewport_width, viewport_height, focal_length) do
     %Camera{
       origin: origin,
@@ -18,7 +18,7 @@ defmodule Camera do
     }
   end
 
-  @spec ray_from_camera_to_uv(Camera, float, float) :: Ray
+  @spec ray_from_camera_to_uv(%Camera{}, float(), float()) :: %Ray{}
   def ray_from_camera_to_uv(camera, u, v) do
     %Ray{
       origin: camera.origin,

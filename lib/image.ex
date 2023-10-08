@@ -2,7 +2,7 @@ require File
 require Pngex
 
 defmodule Image do
-  @spec save_as_png(String, integer, integer, [Vector3]) :: none
+  @spec save_as_png(String, integer(), integer(), [%Vector3{}]) :: none()
   def(save_as_png(path, width, height, pixels)) do
     bitmap =
       for pixel <- pixels do

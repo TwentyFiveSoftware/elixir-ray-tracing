@@ -21,12 +21,12 @@ defmodule ElixirRayTracing do
     Image.save_as_png("./render.png", @width, @height, pixels)
   end
 
-  @spec ray_trace() :: [Vector3]
+  @spec ray_trace() :: [%Vector3{}]
   def ray_trace() do
     for y <- 0..(@height - 1), x <- 0..(@width - 1), do: calculate_pixel_color(x, y)
   end
 
-  @spec calculate_pixel_color(integer, integer) :: Vector3
+  @spec calculate_pixel_color(integer(), integer()) :: %Vector3{}
   def calculate_pixel_color(x, y) do
     u = x / (@width - 1)
     v = y / (@height - 1)

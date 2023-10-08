@@ -3,7 +3,7 @@ require Math
 defmodule Sphere do
   defstruct center: %Vector3{}, radius: 1.0, material: %Material{}
 
-  @spec ray_hits_sphere(Ray, Sphere, float) :: HitRecord
+  @spec ray_hits_sphere(%Ray{}, %Sphere{}, float()) :: %HitRecord{}
   def ray_hits_sphere(ray, sphere, t_min) do
     oc = Vector3.vector_sub(ray.origin, sphere.center)
     a = Vector3.vector_length_squared(ray.direction)

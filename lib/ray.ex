@@ -1,12 +1,12 @@
 defmodule Ray do
   defstruct origin: %Vector3{}, direction: %Vector3{}
 
-  @spec ray_at(Ray, float) :: Vector3
+  @spec ray_at(%Ray{}, float()) :: %Vector3{}
   def ray_at(ray, t) do
     Vector3.vector_mul_scalar(ray.direction, t) |> Vector3.vector_add(ray.origin)
   end
 
-  @spec ray_color(Ray, [Sphere], integer, integer) :: Vector3
+  @spec ray_color(%Ray{}, [%Sphere{}], integer(), integer()) :: %Vector3{}
   def ray_color(ray, spheres, depth, max_ray_recursive_depth) do
     if depth >= max_ray_recursive_depth do
       %Vector3{x: 0.0, y: 0.0, z: 0.0}
@@ -23,13 +23,13 @@ defmodule Ray do
     end
   end
 
-  @spec background_color(Ray) :: Vector3
+  @spec background_color(%Ray{}) :: %Vector3{}
   def background_color(ray) do
     t = (Vector3.vector_normalize(ray.direction).y + 1.0) * 0.5
     Vector3.lerp(%Vector3{x: 1.0, y: 1.0, z: 1.0}, %Vector3{x: 0.5, y: 0.7, z: 1.0}, t)
   end
 
-  @spec calculate_ray_collision(Ray, [Sphere]) :: HitRecord
+  @spec calculate_ray_collision(%Ray{}, [%Sphere{}]) :: HitRecord
   def calculate_ray_collision(ray, spheres) do
     collisions =
       Enum.map(spheres, fn sphere -> Sphere.ray_hits_sphere(ray, sphere, 0.001) end)
