@@ -1,13 +1,20 @@
 defmodule ElixirRayTracing do
   @width 300
   @height 200
+  @max_ray_recursive_depth 50
 
   @aspect_ratio @width / @height
   @viewport_height 2.0
   @viewport_width @viewport_height * @aspect_ratio
 
   @camera Camera.new_camera(%Vector3{}, @viewport_width, @viewport_height, 1.0)
-  @spheres [%Sphere{center: %Vector3{z: 1}, radius: 0.5}]
+  @spheres [
+    %Sphere{
+      center: %Vector3{z: 1},
+      radius: 0.5,
+      material: %Material{type: :diffuse, albedo: %Vector3{x: 0.9, y: 0.9, z: 0.9}}
+    }
+  ]
 
   def main do
     pixels = ray_trace()
@@ -25,18 +32,6 @@ defmodule ElixirRayTracing do
     v = y / (@height - 1)
 
     ray = Camera.ray_from_camera_to_uv(@camera, u, v)
-    ray_color(ray)
-  end
-
-  @spec ray_color(Ray) :: Vector3
-  def ray_color(ray) do
-    hit_record = Ray.calculate_ray_collision(ray, @spheres)
-
-    if hit_record.hit do
-      hit_record.normal
-    else
-      t = (Vector3.vector_normalize(ray.direction).y + 1.0) * 0.5
-      Vector3.lerp(%Vector3{x: 1.0, y: 1.0, z: 1.0}, %Vector3{x: 0.3, y: 0.5, z: 0.8}, t)
-    end
+    Ray.ray_color(ray, @spheres, 0, @max_ray_recursive_depth)
   end
 end

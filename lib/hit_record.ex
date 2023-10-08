@@ -3,5 +3,6 @@ defmodule HitRecord do
             t: 0.0,
             point: %Vector3{},
             normal: %Vector3{},
-            front_facing: true
+            front_facing: true,
+            material: %Material{}
 end

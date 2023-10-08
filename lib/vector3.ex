@@ -18,6 +18,11 @@ defmodule Vector3 do
     %Vector3{x: v.x * scalar, y: v.y * scalar, z: v.z * scalar}
   end
 
+  @spec vector_mul(Vector3, Vector3) :: Vector3
+  def vector_mul(a, b) do
+    %Vector3{x: a.x * b.x, y: a.y * b.y, z: a.z * b.z}
+  end
+
   @spec vector_dot(Vector3, Vector3) :: float
   def vector_dot(a, b) do
     a.x * b.x + a.y * b.y + a.z * b.z
@@ -31,6 +36,11 @@ defmodule Vector3 do
   @spec vector_length(Vector3) :: float
   def vector_length(v) do
     Math.sqrt(vector_length_squared(v))
+  end
+
+  @spec vector_neg(Vector3) :: Vector3
+  def vector_neg(v) do
+    %Vector3{x: -v.x, y: -v.y, z: -v.z}
   end
 
   @spec vector_normalize(Vector3) :: Vector3
