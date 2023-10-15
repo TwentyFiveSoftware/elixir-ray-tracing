@@ -9,14 +9,18 @@ defmodule Ray do
   @spec ray_color(%Ray{}, [%Sphere{}], integer(), integer()) :: %Vector3{}
   def ray_color(ray, spheres, depth, max_ray_recursive_depth) do
     if depth >= max_ray_recursive_depth do
-      %Vector3{x: 0.0, y: 0.0, z: 0.0}
+      %Vector3{}
     else
       hit_record = calculate_ray_collision(ray, spheres)
 
       if hit_record.hit do
-        diffuse_ray = %Ray{origin: hit_record.point, direction: hit_record.normal}
-        previous_ray_color = ray_color(diffuse_ray, spheres, depth + 1, max_ray_recursive_depth)
-        Vector3.vector_mul(hit_record.material.albedo, previous_ray_color)
+        scatter_record = Material.scatter(hit_record)
+        if scatter_record.does_scatter do
+          previous_ray_color = ray_color(scatter_record.scattered_ray, spheres, depth + 1, max_ray_recursive_depth)
+          Vector3.vector_mul(scatter_record.attenuation, previous_ray_color)
+        else
+          %Vector3{}
+        end
       else
         background_color(ray)
       end
