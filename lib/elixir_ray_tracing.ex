@@ -2,13 +2,9 @@ defmodule ElixirRayTracing do
   @width 300
   @height 200
   @max_ray_recursive_depth 50
-  @samples_per_pixel 10
+  @samples_per_pixel 100
 
-  @aspect_ratio @width / @height
-  @viewport_height 2.0
-  @viewport_width @viewport_height * @aspect_ratio
-
-  @camera Camera.new_camera(%Vector3{}, @viewport_width, @viewport_height, 1.0)
+  @camera Camera.new_camera(%Vector3{x: 12.0, y: 2.0, z: 3.0}, %Vector3{}, 25.0, @width, @height)
   @spheres [
     %Sphere{
       center: %Vector3{x: 0.0, y: 0.0, z: 1.0},
@@ -49,7 +45,7 @@ defmodule ElixirRayTracing do
     u = (x + :rand.uniform()) / (@width - 1)
     v = (y + :rand.uniform()) / (@height - 1)
 
-    ray = Camera.ray_from_camera_to_uv(@camera, u, v)
+    ray = Camera.get_camera_ray(@camera, u, v)
     Ray.ray_color(ray, @spheres, 0, @max_ray_recursive_depth)
   end
 end

@@ -45,6 +45,15 @@ defmodule Vector3 do
     %Vector3{x: -v.x, y: -v.y, z: -v.z}
   end
 
+  @spec vector_cross(%Vector3{}, %Vector3{}) :: %Vector3{}
+  def vector_cross(a, b) do
+    %Vector3{
+      x: a.y * b.z - a.z * b.y,
+      y: a.z * b.x - a.x * b.z,
+      z: a.x * b.y - a.y * b.x
+    }
+  end
+
   @spec vector_normalize(%Vector3{}) :: %Vector3{}
   def vector_normalize(v) do
     v_length = vector_length(v)

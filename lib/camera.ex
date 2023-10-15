@@ -1,32 +1,45 @@
 defmodule Camera do
-  defstruct origin: %Vector3{},
+  defstruct look_from: %Vector3{},
             upper_left_corner: %Vector3{},
-            viewport_width: 1,
-            viewport_height: 1
+            horizontal_direction: %Vector3{},
+            vertical_direction: %Vector3{}
 
-  @spec new_camera(%Vector3{}, float(), float(), float()) :: %Camera{}
-  def new_camera(origin, viewport_width, viewport_height, focal_length) do
+  @spec new_camera(%Vector3{}, %Vector3{}, float(), integer(), integer()) :: %Camera{}
+  def new_camera(look_from, look_at, fov, width, height) do
+    aspect_ratio = width / height
+    viewport_height = Math.tan(fov / 360.0 * Math.pi()) * 2.0
+    viewport_width = viewport_height * aspect_ratio
+
+    forward = Vector3.vector_sub(look_at, look_from) |> Vector3.vector_normalize()
+    right = Vector3.vector_cross(%Vector3{y: 1.0}, forward) |> Vector3.vector_normalize()
+    up = Vector3.vector_cross(forward, right) |> Vector3.vector_normalize()
+
+    horizontal_direction = Vector3.vector_mul_scalar(right, viewport_width)
+    vertical_direction = Vector3.vector_mul_scalar(up, viewport_height)
+
+    upper_left_corner =
+      Vector3.vector_sub(look_from, Vector3.vector_mul_scalar(horizontal_direction, 0.5))
+      |> Vector3.vector_add(Vector3.vector_mul_scalar(vertical_direction, 0.5))
+      |> Vector3.vector_add(forward)
+
     %Camera{
-      origin: origin,
-      upper_left_corner: %Vector3{
-        x: viewport_width * -0.5 - origin.x,
-        y: viewport_height * 0.5 - origin.y,
-        z: focal_length - origin.z
-      },
-      viewport_width: viewport_width,
-      viewport_height: viewport_height
+      look_from: look_from,
+      upper_left_corner: upper_left_corner,
+      horizontal_direction: horizontal_direction,
+      vertical_direction: vertical_direction
     }
   end
 
-  @spec ray_from_camera_to_uv(%Camera{}, float(), float()) :: %Ray{}
-  def ray_from_camera_to_uv(camera, u, v) do
+  @spec get_camera_ray(%Camera{}, float(), float()) :: %Ray{}
+  def get_camera_ray(camera, u, v) do
+    target =
+      Vector3.vector_mul_scalar(camera.horizontal_direction, u)
+      |> Vector3.vector_add(camera.upper_left_corner)
+      |> Vector3.vector_sub(Vector3.vector_mul_scalar(camera.vertical_direction, v))
+
     %Ray{
-      origin: camera.origin,
-      direction: %Vector3{
-        x: camera.upper_left_corner.x + camera.viewport_width * u,
-        y: camera.upper_left_corner.y - camera.viewport_height * v,
-        z: camera.upper_left_corner.z
-      }
+      origin: camera.look_from,
+      direction: Vector3.vector_sub(target, camera.look_from)
     }
   end
 end
