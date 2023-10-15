@@ -15,8 +15,11 @@ defmodule Ray do
 
       if hit_record.hit do
         scatter_record = Material.scatter(hit_record)
+
         if scatter_record.does_scatter do
-          previous_ray_color = ray_color(scatter_record.scattered_ray, spheres, depth + 1, max_ray_recursive_depth)
+          previous_ray_color =
+            ray_color(scatter_record.scattered_ray, spheres, depth + 1, max_ray_recursive_depth)
+
           Vector3.vector_mul(scatter_record.attenuation, previous_ray_color)
         else
           %Vector3{}

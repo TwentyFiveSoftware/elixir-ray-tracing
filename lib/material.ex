@@ -11,7 +11,14 @@ defmodule Material do
 
   @spec scatter_diffuse_material(%HitRecord{}) :: %ScatterRecord{}
   def scatter_diffuse_material(hit_record) do
-    scattered_ray = %Ray{origin: hit_record.point, direction: hit_record.normal}
+    scatter_direction = Vector3.vector_add(hit_record.normal, Vector3.random_unit_vector())
+
+    scatter_direction =
+      if Vector3.vector_is_near_zero(scatter_direction),
+        do: hit_record.normal,
+        else: scatter_direction
+
+    scattered_ray = %Ray{origin: hit_record.point, direction: scatter_direction}
 
     %ScatterRecord{
       does_scatter: true,

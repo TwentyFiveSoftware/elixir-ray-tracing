@@ -3,6 +3,8 @@ require Math
 defmodule Vector3 do
   defstruct x: 0.0, y: 0.0, z: 0.0
 
+  @epsilon 1.0e-8
+
   @spec vector_add(%Vector3{}, %Vector3{}) :: %Vector3{}
   def vector_add(a, b) do
     %Vector3{x: a.x + b.x, y: a.y + b.y, z: a.z + b.z}
@@ -62,5 +64,25 @@ defmodule Vector3 do
       y: a.y * (1.0 - t) + b.y * t,
       z: a.z * (1.0 - t) + b.z * t
     }
+  end
+
+  @spec random_unit_vector() :: %Vector3{}
+  def random_unit_vector do
+    v = %Vector3{
+      x: :rand.uniform() * 2.0 - 1.0,
+      y: :rand.uniform() * 2.0 - 1.0,
+      z: :rand.uniform() * 2.0 - 1.0
+    }
+
+    if vector_length_squared(v) < 1.0 do
+      vector_normalize(v)
+    else
+      random_unit_vector()
+    end
+  end
+
+  @spec vector_is_near_zero(%Vector3{}) :: boolean()
+  def vector_is_near_zero(v) do
+    abs(v.x) < @epsilon and abs(v.y) < @epsilon and abs(v.z) < @epsilon
   end
 end
