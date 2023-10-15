@@ -11,9 +11,19 @@ defmodule ElixirRayTracing do
   @camera Camera.new_camera(%Vector3{}, @viewport_width, @viewport_height, 1.0)
   @spheres [
     %Sphere{
-      center: %Vector3{z: 1},
+      center: %Vector3{x: 0.0, y: 0.0, z: 1.0},
       radius: 0.5,
       material: %Material{type: :diffuse, albedo: %Vector3{x: 0.9, y: 0.9, z: 0.9}}
+    },
+    %Sphere{
+      center: %Vector3{x: -1.0, y: 0.0, z: 1.0},
+      radius: 0.5,
+      material: %Material{type: :metal, albedo: %Vector3{x: 0.9, y: 0.9, z: 0.9}}
+    },
+    %Sphere{
+      center: %Vector3{x: 1.0, y: 0.0, z: 1.0},
+      radius: 0.5,
+      material: %Material{type: :dielectric, refraction_index: 1.5}
     }
   ]
 

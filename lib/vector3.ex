@@ -57,6 +57,36 @@ defmodule Vector3 do
     end
   end
 
+  @spec vector_reflect(%Vector3{}, %Vector3{}) :: %Vector3{}
+  def vector_reflect(v, normal) do
+    vector_sub(v, vector_mul_scalar(normal, 2.0 * vector_dot(v, normal)))
+  end
+
+  @spec vector_refract(%Vector3{}, %Vector3{}, float()) :: %Vector3{}
+  def vector_refract(v, normal, refraction_ratio) do
+    cos_theta = min(vector_neg(v) |> vector_dot(normal), 1.0)
+    sin_theta = Math.sqrt(1.0 - cos_theta * cos_theta)
+    r0 = (1.0 - refraction_ratio) / (1.0 + refraction_ratio)
+    reflectance = r0 * r0 + (1.0 - r0 * r0) * (1.0 - cos_theta) ** 5
+
+    if refraction_ratio * sin_theta > 1.0 or reflectance > :rand.uniform() do
+      vector_reflect(v, normal)
+    else
+      r_out_perpendicular =
+        vector_mul_scalar(normal, cos_theta)
+        |> vector_add(v)
+        |> vector_mul_scalar(refraction_ratio)
+
+      r_out_parallel =
+        vector_mul_scalar(
+          normal,
+          -Math.sqrt(1.0 - vector_dot(r_out_perpendicular, r_out_perpendicular))
+        )
+
+      vector_add(r_out_perpendicular, r_out_parallel)
+    end
+  end
+
   @spec lerp(%Vector3{}, %Vector3{}, float()) :: %Vector3{}
   def lerp(a, b, t) do
     %Vector3{

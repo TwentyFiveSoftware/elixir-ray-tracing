@@ -14,7 +14,7 @@ defmodule Ray do
       hit_record = calculate_ray_collision(ray, spheres)
 
       if hit_record.hit do
-        scatter_record = Material.scatter(hit_record)
+        scatter_record = Material.scatter(hit_record, ray)
 
         if scatter_record.does_scatter do
           previous_ray_color =
@@ -41,7 +41,7 @@ defmodule Ray do
     collisions =
       Enum.map(spheres, fn sphere -> Sphere.ray_hits_sphere(ray, sphere, 0.001) end)
       |> Enum.filter(fn hit_record -> hit_record.hit and hit_record.t > 0.001 end)
-      |> Enum.sort(fn a, b -> a.t >= b.t end)
+      |> Enum.sort(fn a, b -> a.t < b.t end)
 
     case collisions do
       [] -> %HitRecord{}
