@@ -45,6 +45,11 @@ defmodule Vector3 do
     %Vector3{x: -v.x, y: -v.y, z: -v.z}
   end
 
+  @spec vector_sqrt(%Vector3{}) :: %Vector3{}
+  def vector_sqrt(v) do
+    %Vector3{x: Math.sqrt(v.x), y: Math.sqrt(v.y), z: Math.sqrt(v.z)}
+  end
+
   @spec vector_cross(%Vector3{}, %Vector3{}) :: %Vector3{}
   def vector_cross(a, b) do
     %Vector3{

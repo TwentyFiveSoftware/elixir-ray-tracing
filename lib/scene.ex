@@ -21,14 +21,14 @@ defmodule Scene do
             %Sphere{
               center: center,
               radius: 0.2,
-              material: %Material{type: :metal, albedo: Color.random_color()}
+              material: %Material{type: :metal, albedo: [Color.random_color()]}
             }
 
           _ ->
             %Sphere{
               center: center,
               radius: 0.2,
-              material: %Material{type: :diffuse, albedo: Color.random_color()}
+              material: %Material{type: :diffuse, albedo: [Color.random_color()]}
             }
         end
       end
@@ -36,7 +36,11 @@ defmodule Scene do
     ground_sphere = %Sphere{
       center: %Vector3{x: 0.0, y: -1000.0, z: 1.0},
       radius: 1000.0,
-      material: %Material{type: :diffuse, albedo: %Vector3{x: 0.95, y: 0.95, z: 0.95}}
+      material: %Material{
+        type: :diffuse,
+        texture_type: :checkered,
+        albedo: [%Vector3{x: 0.05, y: 0.05, z: 0.05}, %Vector3{x: 0.95, y: 0.95, z: 0.95}]
+      }
     }
 
     center_sphere = %Sphere{
@@ -48,13 +52,13 @@ defmodule Scene do
     left_sphere = %Sphere{
       center: %Vector3{x: -4.0, y: 1.0, z: 0.0},
       radius: 1.0,
-      material: %Material{type: :diffuse, albedo: %Vector3{x: 0.6, y: 0.3, z: 0.1}}
+      material: %Material{type: :diffuse, albedo: [%Vector3{x: 0.6, y: 0.3, z: 0.1}]}
     }
 
     right_sphere = %Sphere{
       center: %Vector3{x: 4.0, y: 1.0, z: 0.0},
       radius: 1.0,
-      material: %Material{type: :metal, albedo: %Vector3{x: 0.7, y: 0.6, z: 0.5}}
+      material: %Material{type: :metal, albedo: [%Vector3{x: 0.7, y: 0.6, z: 0.5}]}
     }
 
     %Scene{spheres: [ground_sphere, center_sphere, left_sphere, right_sphere] ++ spheres}

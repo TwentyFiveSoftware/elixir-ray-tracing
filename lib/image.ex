@@ -6,7 +6,8 @@ defmodule Image do
   def(save_as_png(path, width, height, pixels)) do
     bitmap =
       for pixel <- pixels do
-        {trunc(pixel.x * 0xFF), trunc(pixel.y * 0xFF), trunc(pixel.z * 0xFF)}
+        pixel_color = Vector3.vector_sqrt(pixel) |> Vector3.vector_mul_scalar(0xFF)
+        {trunc(pixel_color.x), trunc(pixel_color.y), trunc(pixel_color.z)}
       end
 
     image = generate_png(bitmap, width, height)

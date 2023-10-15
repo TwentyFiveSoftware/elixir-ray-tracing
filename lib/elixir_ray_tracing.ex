@@ -15,6 +15,10 @@ defmodule ElixirRayTracing do
   @spec ray_trace() :: [%Vector3{}]
   def ray_trace() do
     for y <- 0..(@height - 1), x <- 0..(@width - 1) do
+      if x == 0 do
+        IO.puts("#{y + 1} / #{@height}")
+      end
+
       accumulated_pixel_color =
         Enum.reduce(1..@samples_per_pixel, %Vector3{}, fn _, color ->
           Vector3.vector_add(color, calculate_pixel_color(x, y))
