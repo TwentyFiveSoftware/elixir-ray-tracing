@@ -26,4 +26,5 @@ elixir_ray_tracing-*.tar
 /tmp/
 
 .idea
+elixir_ray_tracing.iml
 render.png

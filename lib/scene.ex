@@ -4,7 +4,7 @@ defmodule Scene do
   @spec generate_scene() :: %Scene{}
   def generate_scene do
     spheres =
-      for x <- -11..11, z <- -11..11 do
+      for x <- -11..10, z <- -11..10 do
         center = %Vector3{x: x + :rand.uniform() * 0.7, y: 0.2, z: z + :rand.uniform() * 0.7}
 
         material_random = :rand.uniform()
